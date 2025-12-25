@@ -1,16 +1,44 @@
 import os
 import time
+from pywinauto import Application
 
-def run_hero():
-    # 영웅문 Global의 실행파일 경로
+def run_and_login_hero():
     hero_path = r"C:\KiwoomGlobal\bin\NFStarter.exe"
+    password = "356890" # 실제 비밀번호 입력
     
     if os.path.exists(hero_path):
-        print("영웅문을 실행")
+        print("영웅문을 실행합니다...")
         os.startfile(hero_path)
         
-        print("로그인 창 유지 확인")
-        # 파이썬이 종료되지 않도록 무한 대기합니다.
+        # 창이 뜰 때까지 대기
+        time.sleep(15) 
+
+        try:
+            # 1. 창 연결
+            app = Application(backend="uia").connect(title_re=".*영웅문.*", timeout=20)
+            dlg = app.window(title_re=".*영웅문.*")
+            dlg.set_focus()
+
+            # 2. 비밀번호 입력
+            print("비밀번호 칸에 입력 중...")
+            pw_field = dlg.child_window(auto_id="1001", control_type="Edit")
+            
+            # 직접 클릭 후 타이핑
+            pw_field.click_input()
+            time.sleep(0.5)
+            pw_field.type_keys(password, with_spaces=True)
+            
+            # 3. 로그인 버튼 클릭
+            print("로그인 버튼 클릭")
+            login_btn = dlg.child_window(auto_id="1", control_type="Button")
+            login_btn.click()
+            
+            print("성공적으로 로그인을 시도했습니다.")
+
+        except Exception as e:
+            print(f"오류 발생: {e}")
+            
+        # 무한 대기 (프로그램 종료 방지)
         try:
             while True:
                 time.sleep(1)
@@ -19,7 +47,5 @@ def run_hero():
     else:
         print("경로를 찾을 수 없음")
 
-#메인함수
 if __name__ == "__main__":
-    # 함수호출
-    run_hero()
+    run_and_login_hero()
