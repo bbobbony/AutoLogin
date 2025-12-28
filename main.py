@@ -35,9 +35,10 @@ def run_and_login_hero():
         dlg = app.window(title_re=window_title)
         dlg.set_focus()
 
+        # 연결된 창에서 내부 구조 불러오기
         print("-" * 60)
-        print("[시스템 분석] 로그인 창 컨트롤 스캔...")
-        # dlg.print_control_identifiers() # 필요할 때만 주석 해제
+        print("[시스템 분석] 영웅문 로그인 창의 내부 컨트롤 구조를 스캔...")
+        dlg.print_control_identifiers()  # 터미널에 설계도를 출력하는 핵심 명령어
         print("-" * 60)
 
         print("비밀번호 칸에 입력 중...")
