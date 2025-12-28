@@ -1,10 +1,22 @@
 import os
 import time
-from pywinauto import Application
+from pywinauto import Application, findwindows #중복창을 찾는 라이브러리 추가
 
 def run_and_login_hero():
     hero_path = r"C:\KiwoomGlobal\bin\NFStarter.exe"
-    password = "356890" 
+    password = "356890"
+    window_title = ".*영웅문.*" #찾고자 하는 창의 제목 패턴
+
+    # 창 중복확인
+    try:
+        #해당 타이틀을 가진 창이 있는지 검색
+        existing_window = findwindows.find_windows(title_re=window_title)
+        if existing_window:
+            print("이미 영웅문이 실행중입니다. 프로그램을 실행하지 않습니다.")
+            return
+    except findwindows.ElementNotFoundError:
+        pass
+
 
     #1111이 눌리게 && 현재 창이 켜져있으면 따로 안나오게 && 하나증권도 열리게 && 직렬 및 병렬
     if os.path.exists(hero_path):
@@ -41,7 +53,7 @@ def run_and_login_hero():
             login_btn = dlg.child_window(auto_id="1", control_type="Button")
             login_btn.click()
             
-            print("성공적으로 로그인을 시도했습니다.")
+            print("성공적으로 로그인을 성공")
 
         except Exception as e:
             print(f"오류 발생: {e}")
