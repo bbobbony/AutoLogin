@@ -1,6 +1,6 @@
 import os
 import time
-from pywinauto import Application, findwindows
+from pywinauto import Application
 
 def run_and_login_hero():
     hero_path = r"C:\KiwoomGlobal\bin\NFStarter.exe"
