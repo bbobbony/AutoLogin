@@ -4,8 +4,9 @@ from pywinauto import Application
 
 def run_and_login_hero():
     hero_path = r"C:\KiwoomGlobal\bin\NFStarter.exe"
-    password = "356890" # 실제 비밀번호 입력
-    
+    password = "356890" 
+
+    #1111이 눌리게 && 현재 창이 켜져있으면 따로 안나오게 && 하나증권도 열리게 && 직렬 및 병렬
     if os.path.exists(hero_path):
         print("영웅문을 실행합니다...")
         os.startfile(hero_path)
